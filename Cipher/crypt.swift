@@ -7,24 +7,6 @@
 //
 import Foundation
 import CommonCrypto
-extension Data {
-	init(rc4 count: Int) {
-		self.init(count: count)
-		withUnsafeBytes {
-			arc4random_buf(UnsafeMutableRawPointer(mutating: $0.baseAddress), $0.count)
-		}
-	}
-}
-extension Data {
-	var dispatch: DispatchData {
-		return withUnsafeBytes(DispatchData.init)
-	}
-	func dispatch<T>(invoke: (DispatchData) throws -> T) rethrows -> T {
-		return try withUnsafeBytes {
-			try invoke(DispatchData(bytesNoCopy: $0))
-		}
-	}
-}
 enum Cryption: String, CaseIterable {
 	case AES128 = "AES128"
 	case AES192 = "AES192"
